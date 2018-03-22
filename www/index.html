@@ -8,11 +8,29 @@
 
     <link href="lib/ionic/css/ionic.css" rel="stylesheet">
     <link href="css/style.css" rel="stylesheet">
-        <script>
-        document.addEventListener("deviceready", onDeviceReady, false);
-        function onDeviceReady() {
-            console.log(device.cordova);
-            Device.getInfo();
+    <script src="components/loader.js"></script>
+    <script>
+        document.addEventListener ("deviceready", onDeviceReady, false);
+
+        //these functions runs when Cordova is ready
+        function onDeviceReady () {
+            alert ('Cordova is ready!');
+        }
+
+        function snapPicture () {
+            navigator.camera.getPicture (successCallback, FailCallback, {destinationType: Camera.DestinationType.DATA_URL});
+
+            //Success Callback
+            function successCallback (imageData) {
+                //Display image
+                var image = document.getElementById ('picture');
+                image.src = "data:image/jpeg;base64, " + imageData;
+            }
+
+            //Error CallBack
+            function FailCallback (message) {
+                alert ('Error!!!: ' + message);
+            }
         }
     </script>
     <script></script>
@@ -44,5 +62,8 @@
       have templates inline in this html file if you'd like).
     -->
     <ion-nav-view></ion-nav-view>
+        <h1>Camera Sample</h1>
+    <input type="button" onclick="snapPicture()" value="Snap" ><br><br>
+    <img id="picture" src="" width="150" height="150">
   </body>
 </html>
